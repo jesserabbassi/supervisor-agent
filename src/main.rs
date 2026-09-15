@@ -1,20 +1,26 @@
-// Prevent console window in addition to Slint window in Windows release builds when, e.g., starting the app via file manager. Ignored on other platforms.
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use gpui::*;
 
-use std::error::Error;
+struct HelloWorld;
 
-slint::include_modules!();
+impl Render for HelloWorld {
+    fn render(&mut self, _cx: &mut ViewContext<Self>) -> impl IntoElement {
+        div()
+            .flex()
+            .bg(rgb(0x2e3440))
+            .size_full()
+            .justify_center()
+            .items_center()
+            .text_xl()
+            .text_color(rgb(0xeceff4))
+            .child("Hello, GPUI!")
+    }
+}
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let ui = AppWindow::new()?;
-
-    let ui_handle = ui.as_weak();
-    ui.on_request_increase_value(move || {
-        let ui = ui_handle.unwrap();
-        ui.set_counter(ui.get_counter() + 1);
+fn main() {
+    App::new().run(|cx: &mut AppContext| {
+        cx.open_window(WindowOptions::default(), |cx| {
+            cx.new_view(|_cx| HelloWorld)
+        })
+        .unwrap();
     });
-
-    ui.run()?;
-
-    Ok(())
 }

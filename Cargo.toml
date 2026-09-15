@@ -1,16 +1,7 @@
 [package]
-name = "slint-rust-template"
+name = "my-gpui-app"
 version = "0.1.0"
-edition = "2024"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+edition = "2021"
 
 [dependencies]
-slint = "1.16.1"
-
-[build-dependencies]
-slint-build = "1.16.1"
-
-[profile.release]
-codegen-units = 1
-lto = true
+gpui = { git = "https://github.com/zed-industries/zed" }
