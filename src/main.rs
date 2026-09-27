@@ -1,26 +1,36 @@
-use gpui::*;
+mod infrastructure;
+mod services;
+mod viewmodels;
+mod views;
 
-struct HelloWorld;
-
-impl Render for HelloWorld {
-    fn render(&mut self, _cx: &mut ViewContext<Self>) -> impl IntoElement {
-        div()
-            .flex()
-            .bg(rgb(0x2e3440))
-            .size_full()
-            .justify_center()
-            .items_center()
-            .text_xl()
-            .text_color(rgb(0xeceff4))
-            .child("Hello, GPUI!")
-    }
-}
+use gpui::{px, size, App, AppContext, Bounds, WindowBounds, WindowOptions};
+use gpui_platform::application;
+use std::borrow::Cow;
 
 fn main() {
-    App::new().run(|cx: &mut AppContext| {
-        cx.open_window(WindowOptions::default(), |cx| {
-            cx.new_view(|_cx| HelloWorld)
-        })
-        .unwrap();
+    application().run(|cx: &mut App| {
+        cx.text_system()
+            .add_fonts(vec![
+                Cow::Borrowed(
+                    include_bytes!("../assets/fonts/ibm-plex-sans/IBMPlexSans-Regular.ttf")
+                        .as_slice(),
+                ),
+                Cow::Borrowed(
+                    include_bytes!("../assets/fonts/ibm-plex-sans/IBMPlexSans-SemiBold.ttf")
+                        .as_slice(),
+                ),
+            ])
+            .expect("load application fonts");
+        let options = WindowOptions {
+            window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
+                None,
+                size(px(1500.), px(950.)),
+                cx,
+            ))),
+            ..WindowOptions::default()
+        };
+        cx.open_window(options, |_, cx| cx.new(|_| views::SupervisorApp::new()))
+            .expect("open supervisor window");
+        cx.activate(true);
     });
 }
