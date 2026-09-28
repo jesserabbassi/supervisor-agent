@@ -1,0 +1,11 @@
+pub const BG: u32 = 0x031522;
+pub const PANEL: u32 = 0x071e30;
+pub const PANEL2: u32 = 0x0a293e;
+pub const BORDER: u32 = 0x164660;
+pub const TEXT: u32 = 0xf2f7ff;
+pub const MUTED: u32 = 0x9bb2c5;
+pub const BLUE: u32 = 0x16b9f5;
+pub const ORANGE: u32 = 0xff5a24;
+pub const GREEN: u32 = 0x00d69b;
+pub const RED: u32 = 0xff4a55;
+pub const YELLOW: u32 = 0xffa229;

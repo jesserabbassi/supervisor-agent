@@ -1,8 +1,19 @@
+mod alerts;
+mod app;
+mod auth;
+mod customers;
+mod dashboard;
 mod infrastructure;
-mod services;
-mod viewmodels;
-mod views;
+mod monitoring;
+mod reports;
+mod reservations;
+mod sessions;
+mod settings;
+mod shared;
+mod stations;
+mod wallet;
 
+use app::SupervisorApp;
 use gpui::{px, size, App, AppContext, Bounds, WindowBounds, WindowOptions};
 use gpui_platform::application;
 use std::borrow::Cow;
@@ -29,7 +40,7 @@ fn main() {
             ))),
             ..WindowOptions::default()
         };
-        cx.open_window(options, |_, cx| cx.new(|_| views::SupervisorApp::new()))
+        cx.open_window(options, |_, cx| cx.new(|_| SupervisorApp::new()))
             .expect("open supervisor window");
         cx.activate(true);
     });
